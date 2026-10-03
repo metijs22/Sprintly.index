@@ -3,202 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>چیدمان نهایی کارلنسر</title>
-
-  <link
-    href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css"
-    rel="stylesheet"
-    type="text/css"
-  />
-
+  <title>نمونه کار کارلنسر</title>
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%; margin: 0;
+      background: #0b1020; overflow: hidden;
+      font-family: "Vazirmatn", Tahoma, sans-serif;
     }
-
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      background: #0b1020;
-      overflow: hidden;
-      font-family: "Vazirmatn", Tahoma, "Segoe UI", Arial, sans-serif;
-    }
-
-    .stage {
-      width: 100vw;
-      height: 100vh;
-      display: grid;
-      place-items: center;
-    }
-
+    .stage { width: 100vw; height: 100vh; display: grid; place-items: center; }
     .canvas {
-      position: relative;
-      width: 1920px;
-      height: 1080px;
-      background: #111827;
-      transform-origin: center center;
-      overflow: hidden;
+      position: relative; width: 1920px; height: 1080px;
+      background: #111827; transform-origin: center center; overflow: hidden;
     }
-
     .slide {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      color: #fff;
-      opacity: 0;
-      transform: translateX(40px);
-      transition: opacity 0.45s ease, transform 0.45s ease;
+      position: absolute; inset: 0; display: grid; place-items: center;
+      color: #fff; opacity: 0; transform: translateX(40px);
+      transition: opacity .45s ease, transform .45s ease;
       background-color: #1f2937;
     }
-
-    .slide.active {
-      opacity: 1;
-      transform: none;
-    }
-
+    .slide.active { opacity: 1; transform: none; }
     .slide-content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 40px;
-      padding: 80px 120px;
+      position: relative; z-index: 2; width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 40px; padding: 80px 120px;
     }
-
     .slide-content h1 {
-      margin: 0;
-      font-size: 96px;
-      line-height: 1.2;
-      font-weight: 800;
-      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+      margin: 0; font-size: 96px; line-height: 1.2;
+      font-weight: 800; text-shadow: 0 4px 18px rgba(0,0,0,.35);
     }
-
     .slide-content img {
-      max-width: 100%;
-      max-height: 600px;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      max-width: 100%; max-height: 600px;
+      width: auto; height: auto; object-fit: contain;
+      border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.5);
     }
-
     .slide-content p {
-      margin: 0;
-      font-size: 30px;
-      line-height: 1.9;
-      color: rgba(255, 255, 255, 0.85);
-      text-align: center;
-      max-width: 900px;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      margin: 0; font-size: 30px; line-height: 1.9;
+      color: rgba(255,255,255,.85); text-align: center;
+      max-width: 900px; text-shadow: 0 2px 10px rgba(0,0,0,.3);
     }
-
     .nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      border: 0;
-      background: rgba(255, 255, 255, 0.12);
-      color: #fff;
-      font-size: 40px;
-      cursor: pointer;
-      z-index: 10;
-      display: grid;
-      place-items: center;
-      backdrop-filter: blur(6px);
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 72px; height: 72px; border-radius: 50%; border: 0;
+      background: rgba(255,255,255,.12); color: #fff;
+      font-size: 40px; cursor: pointer; z-index: 10;
+      display: grid; place-items: center; backdrop-filter: blur(6px);
     }
-
-    .nav:hover {
-      background: rgba(255, 255, 255, 0.22);
-    }
-
-    .prev {
-      left: 40px;
-    }
-
-    .next {
-      right: 40px;
-    }
-
+    .nav:hover { background: rgba(255,255,255,.22); }
+    .prev { left: 40px; }
+    .next { right: 40px; }
     .dots {
-      position: absolute;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 16px;
-      z-index: 10;
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%); display: flex; gap: 16px; z-index: 10;
     }
-
     .dot {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 0;
-      background: rgba(255, 255, 255, 0.25);
-      cursor: pointer;
-      padding: 0;
-      backdrop-filter: blur(4px);
+      width: 18px; height: 18px; border-radius: 50%; border: 0;
+      background: rgba(255,255,255,.25); cursor: pointer; padding: 0;
     }
-
-    .dot.active {
-      background: #fff;
-    }
+    .dot.active { background: #fff; }
   </style>
 </head>
 <body>
-
   <div class="stage">
     <div class="canvas" id="canvas">
 
-      <!-- اسلاید ۱: index -->
       <section class="slide active" data-page="index">
         <div class="slide-content">
           <h1>صفحه اصلی</h1>
-          <img src="react/index.png" alt="صفحه اصلی">
-          <p>
-            ورودی اصلی سیستم با دسترسی سریع به بخش‌های مهم،
-            جستجو، پروفایل کاربر و آخرین به‌روزرسانی‌ها.
-          </p>
+          <img src="index.jpg" alt="صفحه اصلی">
+          <p>ورودی اصلی سیستم با دسترسی سریع به بخش‌های مهم، جستجو، پروفایل کاربر و آخرین به‌روزرسانی‌ها.</p>
         </div>
       </section>
 
-      <!-- اسلاید ۲: dashboard -->
       <section class="slide" data-page="dashboard">
         <div class="slide-content">
           <h1>داشبورد</h1>
-          <img src="react/dashboard.png" alt="داشبورد">
-          <p>
-            نمایش گزارش‌ها، آمار لحظه‌ای و شاخص‌های کلیدی سازمان
-            در یک محیط یکپارچه و قابل شخصی‌سازی.
-          </p>
+          <img src="dashboard.jpg" alt="داشبورد">
+          <p>نمایش گزارش‌ها، آمار لحظه‌ای و شاخص‌های کلیدی سازمان در یک محیط یکپارچه و قابل شخصی‌سازی.</p>
         </div>
       </section>
 
-      <!-- اسلاید ۳: kanban -->
       <section class="slide" data-page="kanban">
         <div class="slide-content">
           <h1>کانبان</h1>
-          <img src="react/kanban.png" alt="کانبان">
-          <p>
-            مدیریت بصری پروژه‌ها، پیگیری وضعیت وظایف و همکاری تیمی
-            در یک داشبورد ساده، سریع و کاربردی.
-          </p>
+          <img src="kanban.jpg" alt="کانبان">
+          <p>مدیریت بصری پروژه‌ها، پیگیری وضعیت وظایف و همکاری تیمی در یک داشبورد ساده، سریع و کاربردی.</p>
         </div>
       </section>
 
-      <button class="nav prev" aria-label="اسلاید قبلی">‹</button>
-      <button class="nav next" aria-label="اسلاید بعدی">›</button>
-
+      <button class="nav prev" aria-label="قبلی">‹</button>
+      <button class="nav next" aria-label="بعدی">›</button>
       <div class="dots"></div>
 
     </div>
@@ -206,56 +102,31 @@
 
   <script>
     const canvas = document.getElementById("canvas");
-
     function fitCanvas() {
-      const scale = Math.min(
-        window.innerWidth / 1920,
-        window.innerHeight / 1080
-      );
-      canvas.style.transform = `scale(${scale})`;
+      const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+      canvas.style.transform = `scale(${s})`;
     }
-
     window.addEventListener("resize", fitCanvas);
     fitCanvas();
 
-    const slides = Array.from(document.querySelectorAll(".slide"));
+    const slides = [...document.querySelectorAll(".slide")];
     const dotsWrap = document.querySelector(".dots");
-
-    slides.forEach((_, index) => {
-      const dot = document.createElement("button");
-      dot.className = "dot" + (index === 0 ? " active" : "");
-      dot.setAttribute("aria-label", `رفتن به اسلاید ${index + 1}`);
-      dot.addEventListener("click", () => showSlide(index));
-      dotsWrap.appendChild(dot);
+    slides.forEach((_, i) => {
+      const d = document.createElement("button");
+      d.className = "dot" + (i === 0 ? " active" : "");
+      d.onclick = () => show(i);
+      dotsWrap.appendChild(d);
     });
-
-    const dots = Array.from(dotsWrap.children);
-    let currentSlide = 0;
-
-    function showSlide(index) {
-      currentSlide = (index + slides.length) % slides.length;
-
-      slides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === currentSlide);
-      });
-
-      dots.forEach((dot, i) => {
-        dot.classList.toggle("active", i === currentSlide);
-      });
+    const dots = [...dotsWrap.children];
+    let cur = 0;
+    function show(i) {
+      cur = (i + slides.length) % slides.length;
+      slides.forEach((s, j) => s.classList.toggle("active", j === cur));
+      dots.forEach((d, j) => d.classList.toggle("active", j === cur));
     }
-
-    document.querySelector(".prev").addEventListener("click", () => {
-      showSlide(currentSlide - 1);
-    });
-
-    document.querySelector(".next").addEventListener("click", () => {
-      showSlide(currentSlide + 1);
-    });
-
-    setInterval(() => {
-      showSlide(currentSlide + 1);
-    }, 5000);
+    document.querySelector(".prev").onclick = () => show(cur - 1);
+    document.querySelector(".next").onclick = () => show(cur + 1);
+    setInterval(() => show(cur + 1), 5000);
   </script>
-
 </body>
 </html>
